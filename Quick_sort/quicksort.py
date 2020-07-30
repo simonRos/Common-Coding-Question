@@ -1,10 +1,10 @@
 def quicksort(arr):
     '''Returns sorted array using quicksort'''
-    left = []
-    right = []
+    left = [] #less than pivot
+    right = [] #greater than pivot
     pivot = []
     if len(arr) <= 1:
-        #base case
+        #base case - we can't sort an array of size 0
         return arr
     else:
         for i in arr:
@@ -14,4 +14,5 @@ def quicksort(arr):
                 right.append(i)
             else:
                 pivot.append(i)
+        #recurse - we don't sort pivot because a homogenous list is sorted
         return quicksort(left) + pivot + quicksort(right)
