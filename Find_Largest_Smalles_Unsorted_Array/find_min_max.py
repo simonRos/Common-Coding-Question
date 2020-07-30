@@ -1,8 +1,5 @@
-from functools import wraps
-
 def no_empty_arrays(func):
     '''Prevents function from being fed an empty array'''
-    @wraps(func)
     def inner(*args, **kwargs):
         if type(*args) != list or len(*args) == 0:
             return None
