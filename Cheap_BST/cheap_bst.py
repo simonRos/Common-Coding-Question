@@ -24,8 +24,11 @@ class BST:
         '''insert new node into tree'''
         def inner_insert(self, value, index_pointer):
             '''traverse tree to find insertion point'''
-            if value <= self.tree[index_pointer]:
-                left = left_of(index_pointer)
+            if self.tree[index_pointer] == None:
+                #base case first
+                return 1
+            elif value <= self.tree[index_pointer]:
+                left = self.left_of(index_pointer)
                 #base case
                 if self.tree[left] == None:
                     return left
@@ -33,18 +36,27 @@ class BST:
                 else:
                     return inner_insert(self, value, left)
             else:
-                right = right_of(index_pointer)
+                right = self.right_of(index_pointer)
                 #base case
                 if self.tree[right] == None:
                     return right
                 #recurse case
                 else:
                     return inner_insert(self, value, right)
-        new_index = inner_insert(value, 1)
-        self.tree.insert(new_index, value)
+        new_index = inner_insert(self, value, 1)
         #The None nodes are a good way to identify the end of the tree
-        self.tree.insert(left_of(new_index), None)
-        self.tree.insert(right_of(new_index),None)
+        #due to the way python inserts new elements to a list,
+        #   list.insert(100,1) will actually insert at the smallest element
+        #   which is less than 100
+        #we have to do something hacky and inneficient
+        def force_expand(self, start, end):
+            for x in range(start-1,end+1):
+                try:
+                    temp = self.tree[x]
+                except IndexError:
+                    self.tree.insert(x,None)
+        force_expand(self, len(self.tree), self.right_of(self.right_of(new_index)))
+        self.tree.insert(new_index, value)
 
 
     def delete(self, value):
@@ -63,14 +75,33 @@ class BST:
             elif value > self.tree(index):
                 #recurse right
                 self.delete(value, right_of(index))
+        self.inner_delete(value,1)
                 
                 
-
     def delete_at(self, index):
         '''delete node from tree'''
         self.tree[index] = self.tree[left_of(index)]
         if self.tree[index] != None:    #recurse
             self.delete_at(left_of(index))
+
+
+    def print_tiered(self, blanks = False):
+        level_count = 0
+        level_cap = 1
+        out_strings = []
+        for x in range(1,len(self.tree)):
+            if self.tree[x] != None:
+                out_strings.append(self.tree[x])
+            elif blanks:
+                out_strings.append('_')
+            level_count += 1
+            if level_count == level_cap:
+                if out_strings != []:
+                    print(out_strings)
+                    out_strings = []
+                level_cap *= 2
+                level_count = 0 
+        
 
 
 
