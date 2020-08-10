@@ -49,7 +49,22 @@ class BST:
 
     def delete(self, value):
         '''delete value from tree'''
-        def inner_delete(self, value, index
+        def inner_delete(self, value, index):
+            '''traverse tree to find deletion point'''
+            if value == self.tree[index]:
+                #base case
+                self.delete_at(index)
+            elif self.tree[index] == None:
+                #null base case
+                return None
+            elif value < self.tree(index):
+                #recurse left
+                self.delete(value, left_of(index))
+            elif value > self.tree(index):
+                #recurse right
+                self.delete(value, right_of(index))
+                
+                
 
     def delete_at(self, index):
         '''delete node from tree'''
