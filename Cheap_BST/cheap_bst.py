@@ -1,4 +1,4 @@
-Class BST:
+class BST:
     '''Represents a binary search tree'''
     def __init__ (self, head=None):
         '''initialize the BST'''
@@ -29,6 +29,7 @@ Class BST:
                 #base case
                 if self.tree[left] == None:
                     return left
+                #recurse case
                 else:
                     return inner_insert(self, value, left)
             else:
@@ -36,6 +37,7 @@ Class BST:
                 #base case
                 if self.tree[right] == None:
                     return right
+                #recurse case
                 else:
                     return inner_insert(self, value, right)
         new_index = inner_insert(value, 1)
@@ -46,7 +48,15 @@ Class BST:
 
 
     def delete(self, value):
-        pass
+        '''delete value from tree'''
+        def inner_delete(self, value, index
+
+    def delete_at(self, index):
+        '''delete node from tree'''
+        self.tree[index] = self.tree[left_of(index)]
+        if self.tree[index] != None:    #recurse
+            self.delete_at(left_of(index))
+
 
 
         
